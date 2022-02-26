@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="form">
+        <label for="pet-select">Choose a pet:</label><br />
+        <select name="pets" multiple id="pet-select">
+          <option selected value="dog">Dog</option>
+          <option selected value="cat">Cat</option>
+          <option value="hamster">Hamster</option>
+          <option value="parrot">Parrot</option>
+          <option value="spider">Spider</option>
+          <option value="goldfish">Goldfish</option>
+        </select>https://jsfiddle.net/wilt/jwkzdhsx#
+        <br /><br />
+        <button type="submit" id="submit">Save</button>
+      </form>
+ <script>
+const submit = document.getElementById("submit");
+
+const getFormData = () => {
+  const form = document.getElementById("form");
+  return new FormData(form);
+}
+
+const toJson = function(event) {
+  const formData = getFormData();
+  event.preventDefault();
+  let object = {};
+  formData.forEach((value, key) => {
+    if (!Reflect.has(object, key)) {
+      object[key] = value;
+      return;
+    }
+    if (!Array.isArray(object[key])) {
+      object[key] = [object[key]];
+    }
+    object[key].push(value);
+  });
+  let json = JSON.stringify(object);
+  console.log("got it:" +json);
+};
+
+submit.addEventListener("click", toJson);
+
+
+
+ </script>     
+</body>
+</html>
+
